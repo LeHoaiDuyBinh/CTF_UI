@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/view/admin/css/dashboard.css">
+    <link rel="stylesheet" href="/view/admin/css/dashboard_information.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>PTITShop</title>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>PTIT</span>CTF</div>
+        </a>
+        <ul class="side-menu">
+            <li class="slide-menu-category"><a href="/view/admin/dashboard_category.html"><i class='bx bxs-dashboard'></i>Danh mục thách thức</a></li>
+            <li class="slide-menu-challenges"><a href="/view/admin/dashboard_challenge.html"><i class='bx bx-store-alt'></i>Thách thức</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="/src/view/admin/login.html" class="logout">
+                    <i class='bx bx-log-out-circle'></i> Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="profile">
+                <img src="/src/view/admin/img/user.jpg">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Danh mục thách thức</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">
+                                Category
+                            </a></li>
+                        /
+                        <li><a href="#" class="active">CTF</a></li>
+                        <button id="addBtn" style="font-size: 14px; border: none; right: 0; position: absolute; margin-right: 26px;margin-bottom: 48px; background-color:var(--primary); color: white;; width: 180px; height: 40px;border-radius: 8px;">
+                            Thêm danh mục thách thức
+                        </button>
+                    </ul>
+                </div>
+            </div>
+
+            <!--********************* Category ***********************-->
+            <div style="background: var(--light);color: var(--dark);">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th> -->
+                            <th><span class="las la-sort"></span> ID</th>
+                            <th><span class="las la-sort"></span> TÊN DANH MỤC</th>
+                            <th><span class="las la-sort"></span> ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
+            <div id="myModal" class="modal" style="display: none;">
+                <div class="modal-content" style="border-radius: 8px;">
+                    <form id="CategoryForm">
+                        <label for="CategoryCode">Mã danh mục:</label>
+                        <input style="color: black; background-color: gainsboro;" type="text" id="MaDanhMuc" name="MaDanhMuc" required disabled>
+                        <label for="CategoryName">Tên danh mục:</label>
+                        <input style="color: black" type="text" id="TenDanhMuc" name="TenDanhMuc" required>
+
+                        <button style="color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px;" type="submit" id="submitBtn">Thêm</button>
+                        <button style="color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;" class="btnCancel" type="button" id="cancelBtn">Hủy</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Confirmation Modal -->
+            <div id="confirmationModal">
+                <p>Bạn có chắc chắn muốn xóa dữ liệu này?</p>
+                <button id="confirmDelete" style="background: var(--primary); border: none;padding: 10px 15px; color: white; border-radius: 8px; width: 60px;">Có</button>
+                <button id="cancelDelete" onclick="closeConfirmationModal()" style="background: var(--dark-grey); border: none;padding: 10px 10px; color: white; border-radius: 8px; width: 60px;">Không</button>
+            </div>
+        </main>
+    </div>
+    </main>
+    </div>
+</body>
+
+</html>
+<script src="/view/admin/js/dashboard.js"></script>
+<script>
+    const link = document.querySelector(".slide-menu-category");
+    const addBtn = document.getElementById("addBtn");
+    const modal = document.getElementById("myModal");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const BtnEdit = document.getElementById("submitBtn");
+    const tbody = document.getElementById("tbody");
+    let isEditing = false;
+    let lastCategoryId = 0;
+    let productList = []
+
+    addBtn.addEventListener('click', function() {
+        isEditing = false;
+        document.getElementById("TenDanhMuc").value = "";
+        modal.style.display = "block";
+        BtnEdit.innerText = "Thêm";
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        modal.style.display = "none";
+    })
+
+
+    function sortProductList() {
+        productList.sort((a, b) => {
+            if (a.maDanhMuc === 1) {
+                return -1;
+            } else if (b.maDanhMuc === 1) {
+                return 1;
+            }
+
+            // Sort the rest in ascending order based on maDanhMuc
+            return a.maDanhMuc - b.maDanhMuc;
+        });
+    }
+
+    document.getElementById("CategoryForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (isEditing == false) {
+            const tenDanhMuc = document.getElementById("TenDanhMuc").value;
+            lastCategoryId++;
+
+            const newProduct = {
+                maDanhMuc: lastCategoryId,
+                tenDanhMuc: tenDanhMuc,
+            };
+
+            // Thêm sản phẩm mới vào đầu danh sách (kiểu stack)
+            productList.unshift(newProduct);
+        }
+
+        // Update the IDs for all categories
+        productList.forEach((product, index) => {
+            product.id = index + 1;
+        });
+        sortProductList();
+        renderTable();
+        modal.style.display = "none";
+    });
+
+    function renderTable() {
+        tbody.innerHTML = "";
+        productList.forEach(function(product) {
+            const newRowHTML = `
+            <tr>
+                <td>
+                    <div class="client">
+                        <div class="client-info">
+                            <h4>${product.maDanhMuc}</h4>
+                        </div>
+                    </div>
+                </td>
+                <td>${product.tenDanhMuc}</td>
+                <td>
+                    <i class="fa fa-trash" onclick="handleDeleteClick(event)"></i>
+                    <i class="fa fa-pencil" onclick="handleEditClick(event)"></i>
+                </td>
+            </tr>
+        `;
+
+            tbody.insertAdjacentHTML("beforeend", newRowHTML);
+        });
+    }
+
+
+    // Active
+    link.classList.add('active');
+</script>
