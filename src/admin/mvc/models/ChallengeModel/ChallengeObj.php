@@ -1,6 +1,7 @@
 <?php 
     class ChallengeObj{
         private $chall_id;
+        private $chall_name;
         private $description;
         private $score;
         private $author;
@@ -10,6 +11,7 @@
         public function __construct($row)
         {
             $this->chall_id = $row['chall_id'];
+            $this->chall_name = $row['chall_name'];
             $this->description = $row['description'];
             $this->score = $row['score'];
             $this->author = $row['author'];
@@ -73,6 +75,15 @@
         public function setCategory($category)
         {
                 $this->category = $category;
+
+        }
+        public function getChall_name()
+        {
+                return $this->chall_name;
+        }
+        public function setChall_name($chall_name)
+        {
+                $this->chall_name = $chall_name;
 
         }
     };

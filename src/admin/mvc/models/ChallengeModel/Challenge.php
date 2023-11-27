@@ -1,7 +1,7 @@
 <?php 
 include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
     class Challenge extends DB{
-        function checkAccount($data){
+        function LoadChall(){
                 try {
                     $arr = [];
                     $db = new DB();
@@ -22,6 +22,22 @@ include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
                 } catch (PDOException $e) {
                     return  $sql . "<br>" . $e->getMessage();
                 }
+        }
+
+        function InsertChall($data){
+            try {
+                $db = new DB();
+                $sql = "INSERT INTO `Challenges`(`chall_name`,`description`, `score`, `author`, `flag`, `chall_path`, `category_id`) 
+                VALUES (?,?,?,?,?,?)";
+                $params = array($data['chall_name'], $data['description'], $data['score'],$data['author'], $data['flag'], $data['chall_path'], $data['category_id']);
+                $db->execute($sql, $params);
+
+                echo "done";
+            } catch (PDOException $e) {
+
+                echo "Lỗi khi thêm chall";
+                //echo  $sql . "<br>" . $e->getMessage();
+            }
         }
     }
 ?>

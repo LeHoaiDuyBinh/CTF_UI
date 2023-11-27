@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `Challenges`;
 
 CREATE TABLE Challenges (
   chall_id INT PRIMARY KEY AUTO_INCREMENT,
+  chall_name NVARCHAR(300),
   description NVARCHAR(300),
   score INT NOT NULL,
   author NVARCHAR(100),
