@@ -46,7 +46,7 @@
 
             <!--********************* Category ***********************-->
             <div style="background: var(--light);color: var(--dark);">
-                <table width="100%">
+                <table width="100%" id="myTable">
                     <thead>
                         <tr>
                             <!-- <th>ID</th> -->
@@ -56,17 +56,24 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
+                        <?php foreach($data as $category): ?>
+                            <tr>
+                                <td data-label="MaDM"><?php echo $category->getCategory_id(); ?></td>
+                                <td data-label="TenDM"><?php echo $category->getName(); ?> </td>
+                                <td>
+                                    <i class="fa fa-trash"></i>
+                                    <i class="fa fa-pencil editBtn"></i>
+                                </td> 
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
             <div id="myModal" class="modal" style="display: none;">
                 <div class="modal-content" style="border-radius: 8px;">
                     <form id="CategoryForm">
-                        <!-- <label for="CategoryCode">ID:</label> -->
-                        <!-- <input style="color: black; background-color: gainsboro;" type="text" id="IDDanhMuc" name="IDDanhMuc" required disabled> -->
-                        <label for="CategoryName">Tên danh mục:</label>
-                        <input style="color: black" type="text" id="CategoryName" name="CategoryName" required>
-
+                        <label for="TenDM">Tên danh mục:</label>
+                        <input style="color: black" type="text" id="TenDanhMuc" name="TenDanhMuc" required>
                         <button style="color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px;" type="submit" id="submitBtn">Thêm</button>
                         <button style="color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;" class="btnCancel" type="button" id="cancelBtn">Hủy</button>
                     </form>
@@ -94,7 +101,7 @@
 
     addBtn.addEventListener('click', function() {
         isEditing = false;
-        document.getElementById("CategoryName").value = "";
+        document.getElementById("TenDanhMuc").value = "";
         modal.style.display = "block";
         BtnEdit.innerText = "Thêm";
         action = 'create';
@@ -160,5 +167,88 @@
             }
         }
     })
+    });
+
+    //---------------------- HIỂN THỊ DỮ LIỆU LÊN FORM SỬA
+    $(document).ready(function () {
+        var productForm = document.getElementById("CategoryForm");
+	    var newInput = document.createElement("input");
+        var newLabel = document.createElement("label");
+        $('.editBtn').on('click', function () {
+            action = 'edit';
+            submitBtn.innerText = "Lưu";
+            var row = $(this).closest('tr');
+            var maDM = row.find('td[data-label="MaDM"]').text();
+            var tenDM = row.find('td[data-label="TenDM"]').text();
+            $('#TenDanhMuc').val(tenDM);
+            newLabel.setAttribute("for", "MaDM");
+            newLabel.setAttribute("id", "MaDM")
+            newLabel.textContent = "Mã Danh Mục:";
+            newInput.setAttribute("type", "text");
+            newInput.setAttribute("id", "MaDanhMuc");
+            newInput.setAttribute("name", "MaDanhMuc");
+            newInput.readOnly = true;
+            newInput.style.background = "#eee"
+            productForm.insertBefore(newInput, productForm.firstChild);
+            productForm.insertBefore(newLabel, productForm.firstChild);
+            $('#MaDanhMuc').val(maDM);
+            $('#myModal').show();
+            check++;
+        });
+
+        $('#cancelBtn').on('click', function () {
+            $('#myModal').hide();
+        });
+    });
+
+    //--------------------Xóa dữ liệu-------------------------
+    const table2 = document.querySelector('#myTable');
+    table2.addEventListener('click', function(event) {
+    if (event.target.classList.contains('fa-trash')) {
+        const row = event.target.closest('tr');
+        const category_code = row.cells[0].textContent.trim();
+        console.log(category_code);
+
+        Swal.fire({
+            title: 'Bạn có chắc là muốn xóa sản phẩm này không?',
+            text: "Mọi đơn hàng và thanh toán liên quan cũng sẽ bị xóa. Bạn sẽ không thể hoàn tác sau khi hoàn tất!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vẫn xóa',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        var sw = showLoadingSwal();
+        $.ajax({
+            url: '/Dashboard_category/DeleteCategory',
+            type: 'POST',
+            data: { category_code: category_code },
+            success: function(response) {
+            if (response.trim() == "done") {
+                Swal.fire(
+                'Completed!',
+                'Bạn đã xóa sản phẩm thành công!',
+                'success'
+                )
+                // sau 2 giây sẽ tải lại trang
+                setTimeout(function() {
+                    location.reload();
+                }, 1000); 
+            } else {
+                sw.close();
+                // Nếu có lỗi thì hiển thị thông báo lỗi
+                Swal.fire(
+                'Oops...',
+                response,
+                'error'
+                )
+            }
+            },
+        });
+        }
+    })
+    }
     });
 </script>

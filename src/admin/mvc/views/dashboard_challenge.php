@@ -56,6 +56,20 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
+                        <?php foreach($data as $challenge): ?>
+                            <tr>
+                                <td><?php echo $challenge->getChall_id(); ?></td>
+                                <td><?php echo $challenge->getDescription(); ?></td>
+                                <td><?php echo $challenge->getScore(); ?></td>
+                                <td><?php echo $challenge->getAuthor(); ?></td>
+                                <td><?php echo $challenge->getChall_path(); ?></td>
+                                <td><?php echo $challenge->getCategory(); ?></td>
+                                <td>
+                                    <i class="fa fa-trash"></i>
+                                    <i class="fa fa-pencil editBtn"></i>
+                                </td> 
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
