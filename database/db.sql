@@ -54,3 +54,5 @@ INSERT INTO `Categories`(`name`) VALUES ('Reverse');
 INSERT INTO `Categories`(`name`) VALUES ('Binary Exploit');
 INSERT INTO `Categories`(`name`) VALUES ('Network');
 INSERT INTO `Categories`(`name`) VALUES ('Forensic');
+
+INSERT INTO `Challenges`(`description`, `score`, `author`, `flag`, `chall_path`, `category_id`) VALUES ('test',20,'Moros','ptithcmCTF','/public/challenges/ch1.pcap',4)

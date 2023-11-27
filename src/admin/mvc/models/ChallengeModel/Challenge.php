@@ -5,13 +5,20 @@ include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
                 try {
                     $arr = [];
                     $db = new DB();
-                    $sql = "select * from AdminAccounts where username=? and password=?";
-                    $params = array($data[0],$data[1]);
-                    $sth = $db->select($sql, $params);
-                    if ($sth->rowCount() > 0) {
-                        return "done";
+                    $sql = "SELECT CH.*, C.name FROM Challenges AS CH, Categories AS C 
+                    WHERE CH.category_id = C.category_id";
+                    $sth = $db->select($sql);
+                    $arr = [];
+                    $chall_from_DB = $sth->fetchAll();
+                    foreach ($chall_from_DB as $row) {
+
+                        // tạo sản phẩm
+                        $obj = new ChallengeObj($row);
+                        
+                        // thêm obj vào mảng
+                        $arr[] = $obj;
                     }
-                    return "Wrong username or password";
+                    return $arr;
                 } catch (PDOException $e) {
                     return  $sql . "<br>" . $e->getMessage();
                 }

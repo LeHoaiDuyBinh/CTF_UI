@@ -1,10 +1,11 @@
 <?php 
-    class AdminObj{
+    class ChallengeObj{
         private $chall_id;
         private $description;
         private $score;
         private $author;
         private $chall_path;
+        private $category;
 
         public function __construct($row)
         {
@@ -13,6 +14,7 @@
             $this->score = $row['score'];
             $this->author = $row['author'];
             $this->chall_path = $row['chall_path'];
+            $this->category = $row['name'];
         }
 
         public function getChall_id()
@@ -62,6 +64,16 @@
         public function setChall_path($chall_path)
         {
                 $this->chall_path = $chall_path;
+        }
+
+        public function getCategory()
+        {
+                return $this->category;
+        }
+        public function setCategory($category)
+        {
+                $this->category = $category;
+
         }
     };
 ?>
