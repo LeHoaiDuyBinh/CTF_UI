@@ -61,6 +61,7 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
+                        <?php ?>
                         <?php foreach($data['chall'] as $challenge): ?>
                             <tr> 
                                 <td data-label="TenTT"><?php echo $challenge->getChall_name(); ?></td>
@@ -73,6 +74,7 @@
                                     <i class="fa fa-trash"></i>
                                     <i class="fa fa-pencil editBtn"></i>
                                 </td> 
+                                <td data-label="DM_id" style="display: none !important;"><?php echo $challenge->getCategory_id(); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -82,14 +84,17 @@
                 <div class="modal-content" style="border-radius: 8px;">
                     <form id="ChallForm" enctype="multipart/form-data">
                             
-                    <label for="TenTT">Tên thách thức:</label>
-                    <select style="color: black; width: 100%; height: 46px;" id="TenThachThuc" name="TenThachThuc" required>
-                        <?php foreach ($data['category'] as $challenge) { ?>
-                            <option value="<?php echo $challenge->getName(); ?>">
-                                <?php echo $challenge->getName(); ?>
-                            </option>
-                        <?php } ?>
-                    </select>
+                    <label for="DM">Danh Mục:</label>
+                        <select style="color: black; width: 100%; height: 46px;" id="DanhMuc" name="DanhMuc" required>
+                            <?php foreach ($data['category'] as $challenge) { ?>
+                                <option value="<?php echo $challenge->getCategory_id(); ?>">
+                                    <?php echo $challenge->getName(); ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                            
+                        <label style="margin-top: 10px;" for="TenTT">Tên thách thức:</label>
+                        <input style="color: black" type="text" id="TenThachThuc" name="TenThachThuc" required>
 
                         <label style="margin-top: 10px;" for="Des">Mô tả:</label>
                         <input style="color: black" type="text" id="MoTa" name="MoTa" required>
@@ -231,6 +236,11 @@
             action = 'edit';
             submitBtn.innerText = "Lưu";
             var row = $(this).closest('tr');
+            var categoryData = <?php echo json_encode($data['category']); ?>;
+            var selectElement = document.getElementById("categorySelect");
+            var DM_ID = row.find('td[data-label="DM_id"]').text();
+            console.log(DM_NAME);
+            var option = document.createElement("option");
             var tenTT = row.find('td[data-label="TenTT"]').text();
             var moTa = row.find('td[data-label="MoTa"]').text();
             var diem = row.find('td[data-label="Diem"]').text();
@@ -243,7 +253,9 @@
                 existingLabel.remove();
                 existingInput.remove();
             }          
-
+            var selectElement = document.getElementById("DanhMuc");
+            selectElement.value = DM_ID;
+            $('#TenThachThuc').val(tenTT);
             $('#MoTa').val(moTa);
             $('#Diem').val(diem);
             $('#TacGia').val(tacGia);
