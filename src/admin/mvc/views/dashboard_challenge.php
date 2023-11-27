@@ -63,7 +63,7 @@
                     <tbody id="tbody">
                         <?php foreach($data as $challenge): ?>
                             <tr>
-                                <td><?php echo $challenge->getChall_id(); ?></td>
+                                <td data-label=""><?php echo $challenge->getChall_id(); ?></td>
                                 <td><?php echo $challenge->getDescription(); ?></td>
                                 <td><?php echo $challenge->getScore(); ?></td>
                                 <td><?php echo $challenge->getAuthor(); ?></td>
