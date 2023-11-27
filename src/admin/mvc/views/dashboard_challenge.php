@@ -239,7 +239,6 @@
             var categoryData = <?php echo json_encode($data['category']); ?>;
             var selectElement = document.getElementById("categorySelect");
             var DM_ID = row.find('td[data-label="DM_id"]').text();
-            console.log(DM_NAME);
             var option = document.createElement("option");
             var tenTT = row.find('td[data-label="TenTT"]').text();
             var moTa = row.find('td[data-label="MoTa"]').text();
