@@ -4,9 +4,14 @@
 
         function Show(){
             $model = $this->model("Challenge");
-            $data = $model->LoadChall();
-            //var_dump($data);
-            $page = $this->view("dashboard_challenge", $data);
+            $data['chall'] = $model->LoadChall();
+
+            $model = $this->model("Category");
+            $data['category'] = $model->LoadCategories();
+
+
+            var_dump($data['chall']);
+            //$page = $this->view("dashboard_challenge", $data);
         }
 
         function UpLoadFiles($uploadedFile){

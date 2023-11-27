@@ -11,8 +11,6 @@
         }
 
         function ValidateData($data){
-
-
             // check thiếu data
             if($this->validateNull($data)){
                 return "Vui lòng nhập đủ thông tin";
@@ -39,7 +37,7 @@
 
                 $this->access = true;
                 $category_data = array(
-                    "category_name" => $_POST['CategoryName'],
+                    "category_name" => $_POST['TenDanhMuc'],
                 );
                     
                 $check = $this->ValidateData($category_data);
@@ -57,12 +55,11 @@
         function EditCategory(){
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-                $this->access = true;
+                //$this->access = true;
     
                 $category_data = array(
                     "category_id" => $_POST['CategoryID'],
                     "category_name" => $_POST['CategoryName'],
-                    "category_parent_id" => $_POST['CategoryParentID'],
                 );
                     
                 $check = $this->ValidateData($category_data);

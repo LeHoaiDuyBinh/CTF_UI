@@ -7,6 +7,7 @@
         private $author;
         private $chall_path;
         private $category;
+        private $category_id;
 
         public function __construct($row)
         {
@@ -17,6 +18,8 @@
             $this->author = $row['author'];
             $this->chall_path = $row['chall_path'];
             $this->category = $row['name'];
+            $this->category_id = $row['category_id'];
+
         }
 
         public function getChall_id()
@@ -84,6 +87,17 @@
         public function setChall_name($chall_name)
         {
                 $this->chall_name = $chall_name;
+
+        }
+
+        public function getCategory_id()
+        {
+                return $this->category_id;
+        }
+
+        public function setCategory_id($category_id)
+        {
+                $this->category_id = $category_id;
 
         }
     };
