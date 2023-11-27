@@ -3,10 +3,9 @@
         private $access = false;
 
         function Show(){
-            // $model = $this->model("Category");
-            // $data = $model->LoadCategories();
-            $data = [];
-            echo "haha";
+            $model = $this->model("Challenge");
+            $data = $model->LoadChall();
+            //var_dump($data);
             $page = $this->view("dashboard_challenge", $data);
         }
 
@@ -40,16 +39,20 @@
 
                 $this->access = true;
     
-                $category_data = array(
-                    "category_name" => $_POST['CategoryName'],
-                    "category_parent_id" => $_POST['CategoryParentID'],
+                $chall_data = array(
+                    "category_id" => $_POST['CategoryID'],
+                    "description" => $_POST['CategoryName'],
+                    "score" => $_POST['CategoryParentID'],
+                    "author" => $_POST['CategoryParentID'],
+                    "chall_path" => $_POST['CategoryParentID'],
+                    "category_id" => $_POST['CategoryParentID'],
                 );
                     
-                $check = $this->ValidateData($category_data);
+                $check = $this->ValidateData($chall_data);
                 if($check == "validated"){
                     
                         $model = $this->model("Category");
-                        $model->InsertCategory($category_data);
+                        $model->InsertCategory($chall_data);
                 }
                 else{
                     echo $check;
@@ -62,20 +65,23 @@
 
                 $this->access = true;
     
-                $category_data = array(
+                $chall_data = array(
                     "category_id" => $_POST['CategoryID'],
-                    "category_name" => $_POST['CategoryName'],
-                    "category_parent_id" => $_POST['CategoryParentID'],
+                    "description" => $_POST['CategoryName'],
+                    "score" => $_POST['CategoryParentID'],
+                    "author" => $_POST['CategoryParentID'],
+                    "chall_path" => $_POST['CategoryParentID'],
+                    "category_id" => $_POST['CategoryParentID'],
                 );
                     
-                $check = $this->ValidateData($category_data);
+                $check = $this->ValidateData($chall_data);
                 if($check == "validated"){
-                    if($category_data["category_id"] <= 8){
+                    if($chall_data["category_id"] <= 8){
                         echo "Không được sửa danh mục cha";
                     }
-                    else if($category_data["category_id"] > 8){
+                    else if($chall_data["category_id"] > 8){
                         $model = $this->model("Category");
-                        $model->EditCategory($category_data);
+                        $model->EditCategory($chall_data);
                     }
                 }
                 else{

@@ -1,7 +1,7 @@
 <?php 
 include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
     class Challenge extends DB{
-        function checkAccount($data){
+        function LoadChall(){
                 try {
                     $arr = [];
                     $db = new DB();
