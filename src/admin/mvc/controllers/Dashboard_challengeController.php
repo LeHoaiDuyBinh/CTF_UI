@@ -9,6 +9,27 @@
             $page = $this->view("dashboard_challenge", $data);
         }
 
+        function UpLoadFiles($uploadedFile){
+
+            if(!isset($uploadedFile)){
+                return "Vui lòng chọn file";
+            }
+
+            // gộp các thuộc tính của file thành một cụm
+
+            $uploadPath = './public/challenges';
+
+            
+            // di chuyển từng file vào dir vừa tạo
+                // lưu lại dir
+                $path = $uploadPath . "/" .  basename($uploadedFile["name"]);
+                //var_dump($uploadedFile);
+                if(move_uploaded_file($uploadedFile['tmp_name'], $path)){
+                    return $path;
+                }
+            return false;
+        }
+
         function ValidateData($data){
 
 
@@ -34,28 +55,42 @@
             return 'validated';
         }
 
-        function AddCategory(){
+        function AddChall(){
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                $this->access = true;
-    
-                $chall_data = array(
-                    "category_id" => $_POST['CategoryID'],
-                    "description" => $_POST['CategoryName'],
-                    "score" => $_POST['CategoryParentID'],
-                    "author" => $_POST['CategoryParentID'],
-                    "chall_path" => $_POST['CategoryParentID'],
-                    "category_id" => $_POST['CategoryParentID'],
-                );
-                    
-                $check = $this->ValidateData($chall_data);
-                if($check == "validated"){
-                    
-                        $model = $this->model("Category");
-                        $model->InsertCategory($chall_data);
+                // sinh mã sp
+                if($_POST == NULL){
+                    echo "reload";
                 }
-                else{
-                    echo $check;
+                else {
+        
+                    $chall_data = array(
+                        "chall_name" => $_POST['TenThachThuc'],
+                        "description" => $_POST['MoTa'],
+                        "score" => $_POST['Diem'],
+                        "author" => $_POST['Author'],
+                        "flag" => $_POST['Flag']
+                    );
+                        
+                    //$check = $this->ValidateProductData($product_data);
+                    $check = 'validated';
+                    if($check === "validated"){
+                        
+                        $uploadedFile = $_FILES["ChallFilePath"];
+                        $fileNames = $this->UpLoadFiles($uploadedFile);
+                        if($fileNames == false){
+                            echo "Lỗi upload file";
+                        }
+                        else{
+                            // thêm ảnh vào data
+                            $chall_data["chall_path"] = $fileNames;
+
+                            $model = $this->model("Challenge");
+                            $model->InsertProduct($chall_data);
+                        }
+                    }
+                    else{
+                        echo $check;
+                    }
                 }
             }
         }

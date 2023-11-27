@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/public/css/dashboard.css">
     <link rel="stylesheet" href="/public/css/dashboard_information.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/sweetalert2@11.0.0/dist/sweetalert2.min.css">
+
+    <script src="https://unpkg.com/sweetalert2@11.0.0/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>PTITShop</title>
 </head>
 
@@ -61,7 +66,7 @@
             </div>
             <div id="myModal" class="modal" style="display: none;">
                 <div class="modal-content" style="border-radius: 8px;">
-                    <form id="CategoryForm">
+                    <form id="ChallForm" enctype="multipart/form-data">
                         <label for="CategoryCode">Tên thách thức:</label>
                         <input style="color: black" type="text" id="TenThachThuc" name="TenThachThuc" required>
 
@@ -108,6 +113,7 @@
     const tbody = document.getElementById("tbody");
     let isEditing = false;
     let challengesList = [];
+    let action = '';
 
     addBtn.addEventListener('click', function() {
         isEditing = false;
@@ -119,61 +125,71 @@
         document.getElementById("ChallFilePath").value = "";
         modal.style.display = "block";
         BtnEdit.innerText = "Thêm";
+        action = 'create';
     });
 
     cancelBtn.addEventListener('click', function() {
         modal.style.display = "none";
     })
 
-    submitBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        const tenThachThuc = document.getElementById("TenThachThuc").value;
-        const moTa = document.getElementById("MoTa").value;
-        const diem = document.getElementById("Diem").value;
-        const author = document.getElementById("Author").value;
-        const flag = document.getElementById("Flag").value;
-        const challFilePathInput = document.getElementById("ChallFilePath");
-        const fullPath = challFilePathInput.value;
-        const fileName = fullPath.split("\\").pop();
-        const challFilePath = fileName || '';
-
-        if (isEditing == false) {
-            const newChallenge = {
-                tenThachThuc: tenThachThuc,
-                moTa: moTa,
-                diem: diem,
-                author: author,
-                flag: flag,
-                challFilePath: challFilePath,
-            };
-            challengesList.push(newChallenge);
+    function showLoadingSwal() {
+            return Swal.fire({
+                title: 'Loading...',
+                text: 'Vui lòng chờ trong giây lát!',
+                timer: 2000,
+                showConfirmButton: false,
+                imageUrl: '/public/img/gif/loading.gif',
+                allowOutsideClick: false // Không cho phép đóng khi click ra ngoài
+            });
         }
 
-        renderTable();
-        modal.style.display = "none";
+    $('#ChallForm').submit(function(e){
+        e.preventDefault();
+
+        let method = '';
+
+        if(action == "create"){
+            method = "AddChall";
+        }
+        else if(action == "edit"){
+            method = "EditChall";
+        }
+
+        var formData = new FormData(this);
+
+        // gửi data
+        var sw = showLoadingSwal();
+            $.ajax({
+                url:'/Dashboard_challenge/' + method,
+                method: 'POST',
+                data: formData,
+                processData: false,  // Ngăn jQuery xử lý dữ liệu
+                contentType: false,  // Ngăn jQuery đặt tiêu đề 'Content-Type'
+                error:err=>{
+                    console.log(err)
+                },
+                success:function(resp){
+            var actionText = action == 'create' ? 'thêm' : 'sửa';
+            if(resp.trim() == "done"){
+            Swal.fire(
+                'Completed!',
+                'Bạn đã '+ actionText +' chall thành công!',
+                'success'
+                )
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+            $('#myModal').hide();
+            }else{
+                sw.close();
+
+                //nhớ thêm cái này cho mấy trang kia
+                $('#ChallForm').find('.alert-danger').remove();
+                $('#ChallForm').prepend('<div class="alert alert-danger">'+ resp + '</div>');
+            }
+        }
+    })
     });
-
-    function renderTable() {
-        tbody.innerHTML = "";
-        challengesList.forEach(function(challenge) {
-            const newRowHTML = `
-                <tr>
-                    <td>${challenge.tenThachThuc}</td>
-                    <td>${challenge.moTa}</td>
-                    <td>${challenge.diem}</td>
-                    <td>${challenge.author}</td>
-                    <td>${challenge.flag}</td>
-                    <td>${challenge.challFilePath}</td>
-                    <td>
-                        <i class="fa fa-trash" onclick="handleDeleteClick(${challenge.id})"></i>
-                        <i class="fa fa-pencil" onclick="handleEditClick(${challenge.id})"></i>
-                    </td>
-                </tr>
-            `;
-
-            tbody.insertAdjacentHTML("beforeend", newRowHTML);
-        });
-    }
 
     // Active
     link.classList.add('active');
