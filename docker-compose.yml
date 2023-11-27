@@ -1,0 +1,68 @@
+version: "3.6"
+
+services:
+  MysqlData2:
+    image: busybox
+    volumes:
+      - ./database/mysql-data:/var/lib/mysql
+  db2:
+    build: ./database
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_unicode_ci --port=3307
+    restart: unless-stopped
+    expose:
+        - 3307
+    volumes_from:
+      - "MysqlData2"
+    environment:
+      # These password and stuff is not neccesarry too secret
+      - MYSQL_ROOT_PASSWORD=45299417d86f231f6a58434488edb763
+      - MYSQL_DATABASE=web_ctf
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+      - TZ=Asia/Ho_Chi_Minh
+  phpmyadmin2:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma2
+    links:
+      - db2
+    environment:
+      PMA_HOST: db2
+      PMA_PORT: 3307
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8093:80
+
+  admin_ctf:
+    build: ./src/admin
+    restart: 'always'
+    ports:
+      - "8094:80"
+    environment:
+      # These password and stuff is not neccesarry too secret
+      - MYSQL_HOSTNAME=db2
+      - MYSQL_PORT=3307
+      - MYSQL_ROOT_PASSWORD=45299417d86f231f6a584d1488edb763
+      - MYSQL_DATABASE=web_ctf
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+    volumes:
+      - "./src/admin:/var/www/html/"
+  competition_ctf:
+    build: ./src/competition
+    restart: 'always'
+    ports:
+      - "8095:80"
+    environment:
+      # These password and stuff is not neccesarry too secret
+      - MYSQL_HOSTNAME=db2
+      - MYSQL_PORT=3307
+      - MYSQL_ROOT_PASSWORD=45299417d86f231f6a584d1488edb763
+      - MYSQL_DATABASE=web_ctf
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+    volumes:
+      - "./src/competition:/var/www/html/"
+      - "./src/admin/public/challenges:/var/www/html/public/challenges"
