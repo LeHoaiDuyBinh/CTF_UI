@@ -64,8 +64,8 @@
                     <tbody id="tbody">
                         <?php ?>
                         <?php foreach($data['chall'] as $challenge): ?>
-                            <tr>
-                                <td data-label="TenTT"><?php echo $challenge->getChall_id(); ?></td>
+                            <tr> 
+                                <td data-label="ID" style="display: none;"><?php echo $challenge->getChall_id(); ?></td>
                                 <td data-label="TenTT"><?php echo $challenge->getChall_name(); ?></td>
                                 <td data-label="MoTa"><?php echo $challenge->getDescription(); ?></td>
                                 <td data-label="Diem"><?php echo $challenge->getScore(); ?></td>
@@ -85,7 +85,6 @@
             <div id="myModal" class="modal" style="display: none;">
                 <div class="modal-content" style="border-radius: 8px;">
                     <form id="ChallForm" enctype="multipart/form-data">
-                            
                     <label for="DM">Danh Mục:</label>
                         <select style="color: black; width: 100%; height: 46px;" id="DanhMuc" name="DanhMuc" required>
                             <?php foreach ($data['category'] as $challenge) { ?>
@@ -234,11 +233,14 @@
 
     //--------------------ĐỔ DỮ LIỆU LÊN FORM SỬA-----------------
     $(document).ready(function () {
-        var productForm = document.getElementById("ChallForm");
+        var challForm = document.getElementById("ChallForm");
+	    var newInput = document.createElement("input");
+        var newLabel = document.createElement("label");
         $('.editBtn').on('click', function () {
             action = 'edit';
             submitBtn.innerText = "Lưu";
             var row = $(this).closest('tr');
+            var id = row.find('td[data-label="ID"]').text();
             var categoryData = <?php echo json_encode($data['category']); ?>;
             var selectElement = document.getElementById("categorySelect");
             var DM_ID = row.find('td[data-label="DM_id"]').text();
@@ -257,6 +259,19 @@
             }          
             var selectElement = document.getElementById("DanhMuc");
             selectElement.value = DM_ID;
+            newLabel.setAttribute("for", "chall_id");
+            newLabel.setAttribute("id", "chall_id")
+            newLabel.textContent = "Mã sản phẩm:";
+
+            // Tạo input mới
+            newInput.setAttribute("type", "text");
+            newInput.setAttribute("id", "ID");
+            newInput.setAttribute("name", "ID");
+            newInput.readOnly = true;
+            newInput.style.background = "#eee"
+            challForm.insertBefore(newInput, challForm.firstChild);
+            challForm.insertBefore(newLabel, challForm.firstChild);
+            $('#ID').val(id);
             $('#TenThachThuc').val(tenTT);
             $('#MoTa').val(moTa);
             $('#Diem').val(diem);
