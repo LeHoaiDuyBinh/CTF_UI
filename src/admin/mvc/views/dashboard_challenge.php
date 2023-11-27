@@ -61,14 +61,14 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        <?php foreach($data as $challenge): ?>
-                            <tr>
-                                <td data-label=""><?php echo $challenge->getChall_id(); ?></td>
-                                <td><?php echo $challenge->getDescription(); ?></td>
-                                <td><?php echo $challenge->getScore(); ?></td>
-                                <td><?php echo $challenge->getAuthor(); ?></td>
-                                <td><?php echo $challenge->getChall_path(); ?></td>
-                                <td><?php echo $challenge->getCategory(); ?></td>
+                        <?php foreach($data['chall'] as $challenge): ?>
+                            <tr> 
+                                <td data-label="TenTT"><?php echo $challenge->getChall_name(); ?></td>
+                                <td data-label="MoTa"><?php echo $challenge->getDescription(); ?></td>
+                                <td data-label="Diem"><?php echo $challenge->getScore(); ?></td>
+                                <td data-label="TacGia"><?php echo $challenge->getAuthor(); ?></td>
+                                <td data-label="Flag"><?php echo $challenge->getFlag(); ?></td>
+                                <td data-label="ChallPath"><?php echo $challenge->getChall_path(); ?></td>
                                 <td>
                                     <i class="fa fa-trash"></i>
                                     <i class="fa fa-pencil editBtn"></i>
@@ -81,23 +81,28 @@
             <div id="myModal" class="modal" style="display: none;">
                 <div class="modal-content" style="border-radius: 8px;">
                     <form id="ChallForm" enctype="multipart/form-data">
-                        <label for="CategoryCode">Tên thách thức:</label>
-                        <input style="color: black" type="text" id="TenThachThuc" name="TenThachThuc" required>
+                            
+                    <label for="TenTT">Tên thách thức:</label>
+                    <select style="color: black; width: 100%; height: 46px;" id="TenThachThuc" name="TenThachThuc" required>
+                        <?php foreach ($data['category'] as $challenge) { ?>
+                            <option value="<?php echo $challenge->getName(); ?>">
+                                <?php echo $challenge->getName(); ?>
+                            </option>
+                        <?php } ?>
+                    </select>
 
-                        <label for="OrderName">Mô tả:</label>
+                        <label style="margin-top: 10px;" for="Des">Mô tả:</label>
                         <input style="color: black" type="text" id="MoTa" name="MoTa" required>
 
-                        <label for="OrderName">Điểm:</label>
+                        <label for="Score">Điểm:</label>
                         <input style="color: black" type="text" id="Diem" name="Diem" required>
 
-                        <label for="OrderName">Author:</label>
-                        <input style="color: black" type="text" id="Author" name="Author" required>
+                        <label for="Author">Author:</label>
+                        <input style="color: black" type="text" id="TacGia" name="TacGia" required>
 
-                        <label for="OrderName">Flag:</label>
-                        <input style="color: black" type="text" id="Flag" name="Flag" required>
+                        <label for="Flag">Flag:</label>
+                        <input style="color: black" type="text" id="flag" name="flag" required>
 
-                        <label for="OrderName">Chall File Path:</label>
-                        <input style="color: black; margin-bottom: 20px;" type="file" id="ChallFilePath" name="ChallFilePath" required>
                         <br>
                         <button style="color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px;" type="submit" id="submitBtn">Thêm</button>
                         <button style="color: white; padding: 14px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;" class="btnCancel" type="button" id="cancelBtn">Hủy</button>
@@ -131,12 +136,26 @@
 
     addBtn.addEventListener('click', function() {
         isEditing = false;
-        document.getElementById("TenThachThuc").value = "";
         document.getElementById("MoTa").value = "";
         document.getElementById("Diem").value = "";
-        document.getElementById("Author").value = "";
-        document.getElementById("Flag").value = "";
-        document.getElementById("ChallFilePath").value = "";
+        document.getElementById("TacGia").value = "";
+        document.getElementById("flag").value = "";
+        var challForm = document.getElementById("ChallForm");
+        var existingLabel = document.getElementById("CFP");
+        var existingInput = document.getElementById("ChallFilePath");
+        if (!existingLabel && !existingInput) {
+            var newInput = document.createElement("input");
+            var newLabel = document.createElement("label");
+            newLabel.setAttribute("for", "CFP");
+            newLabel.setAttribute("id", "CFP")
+            newLabel.textContent = "Chall File Path";
+            newInput.setAttribute("type", "file");
+            newInput.setAttribute("id", "ChallFilePath");
+            newInput.setAttribute("name", "ChallFilePath");
+            newInput.style.width = '100%';
+            challForm.insertBefore(newLabel, BtnEdit);
+            challForm.insertBefore(newInput, BtnEdit);
+        }
         modal.style.display = "block";
         BtnEdit.innerText = "Thêm";
         action = 'create';
@@ -205,6 +224,38 @@
     })
     });
 
+    //--------------------ĐỔ DỮ LIỆU LÊN FORM SỬA-----------------
+    $(document).ready(function () {
+        var productForm = document.getElementById("ChallForm");
+        $('.editBtn').on('click', function () {
+            action = 'edit';
+            submitBtn.innerText = "Lưu";
+            var row = $(this).closest('tr');
+            var tenTT = row.find('td[data-label="TenTT"]').text();
+            var moTa = row.find('td[data-label="MoTa"]').text();
+            var diem = row.find('td[data-label="Diem"]').text();
+            var tacGia = row.find('td[data-label="TacGia"]').text();
+            var flag = row.find('td[data-label="Flag"]').text();  
+            var existingLabel = document.getElementById("CFP");
+            var existingInput = document.getElementById("ChallFilePath");
+
+            if (existingLabel && existingInput) {
+                existingLabel.remove();
+                existingInput.remove();
+            }          
+
+            $('#MoTa').val(moTa);
+            $('#Diem').val(diem);
+            $('#TacGia').val(tacGia);
+            $('#flag').val(flag);
+            $('#myModal').show();
+            // check++;
+        });
+
+        $('#cancelBtn').on('click', function () {
+            $('#myModal').hide();
+        });
+    });
     // Active
     link.classList.add('active');
 </script>

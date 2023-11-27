@@ -10,8 +10,8 @@
             $data['category'] = $model->LoadCategories();
 
 
-            var_dump($data['chall']);
-            //$page = $this->view("dashboard_challenge", $data);
+            // var_dump($data['chall']);
+            $page = $this->view("dashboard_challenge", $data);
         }
 
         function UpLoadFiles($uploadedFile){
