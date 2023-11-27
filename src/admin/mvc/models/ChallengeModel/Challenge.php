@@ -63,6 +63,23 @@ include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
             }
         }
 
+        function EditChall($data){
+            try {
+
+                $db = new DB();
+                $sql = "UPDATE `Challenges` SET `chall_name`=?,`description`=?,`score`=?,`author`=?,`flag`=?,`category_id`=? 
+                WHERE `chall_id` = ?";
+                $params = array($data['chall_name'], $data['description'], $data['score'],$data['author'], $data['flag'], $data['category_id'], $data['chall_id']);
+                $db->execute($sql, $params);
+
+                echo "done";
+            } catch (PDOException $e) {
+
+                //echo "Lỗi khi thêm chall";
+                echo  $sql . "<br>" . $e->getMessage();
+            }
+        }
+
         function DeleteChall($data){
             try {
                 $db = new DB();

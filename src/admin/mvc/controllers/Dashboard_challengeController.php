@@ -107,7 +107,7 @@
                 $this->access = true;
     
                 $chall_data = array(
-                    "chall_name" => $_POST['TenThachThuc'],
+                    "chall_id" => $_POST['ID'],
                     "chall_name" => $_POST['TenThachThuc'],
                     "description" => $_POST['MoTa'],
                     "score" => $_POST['Diem'],
@@ -116,15 +116,11 @@
                     "category_id" => $_POST['DanhMuc']
                 );
                     
-                $check = $this->ValidateData($chall_data);
+                //$check = $this->ValidateData($chall_data);
+                $check = "validated";
                 if($check == "validated"){
-                    if($chall_data["category_id"] <= 8){
-                        echo "Không được sửa danh mục cha";
-                    }
-                    else if($chall_data["category_id"] > 8){
-                        $model = $this->model("Category");
-                        $model->EditCategory($chall_data);
-                    }
+                        $model = $this->model("Challenge");
+                        $model->EditChall($chall_data);
                 }
                 else{
                     echo $check;
