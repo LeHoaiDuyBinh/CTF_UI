@@ -6,6 +6,7 @@
         private $score;
         private $author;
         private $chall_path;
+        private $flag;
         private $category;
         private $category_id;
 
@@ -15,6 +16,7 @@
             $this->chall_name = $row['chall_name'];
             $this->description = $row['description'];
             $this->score = $row['score'];
+            $this->flag = $row['flag'];
             $this->author = $row['author'];
             $this->chall_path = $row['chall_path'];
             $this->category = $row['name'];
@@ -60,6 +62,17 @@
         public function setAuthor($author)
         {
                 $this->author = $author;
+        }
+
+        public function getFlag()
+        {
+                return $this->flag;
+        }
+
+        public function setFlag($flag)
+        {
+                $this->flag = $flag;
+
         }
 
         public function getChall_path()
