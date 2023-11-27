@@ -56,4 +56,5 @@ INSERT INTO `Categories`(`name`) VALUES ('Binary Exploit');
 INSERT INTO `Categories`(`name`) VALUES ('Network');
 INSERT INTO `Categories`(`name`) VALUES ('Forensic');
 
-INSERT INTO `Challenges`(`chall_name`,`description`, `score`, `author`, `flag`, `chall_path`, `category_id`) VALUES ('Network','test',20,'Moros','ptithcmCTF','/public/challenges/ch1.pcap',4);
+INSERT INTO `Challenges`(`chall_name`,`description`, `score`, `author`, `flag`, `chall_path`, `category_id`) VALUES ('FTP - authentication','test',20,'Moros','ptithcmCTF','/public/challenges/ch1.pcap',4);
+INSERT INTO `Users`(`username`, `password`, `email`) VALUES ('teo','teo','teo@gmail.com');

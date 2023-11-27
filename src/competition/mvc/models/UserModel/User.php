@@ -1,11 +1,11 @@
 <?php 
-include_once "./mvc/models/AdminModel/AdminObj.php";
-    class Admin extends DB{
+include_once "./mvc/models/UserModel/UserObj.php";
+    class User extends DB{
         function checkAccount($data){
                 try {
                     $arr = [];
                     $db = new DB();
-                    $sql = "select * from Users where username=? and password=?";
+                    $sql = "SELECT * FROM Users WHERE username=? AND password=?";
                     $params = array($data[0],$data[1]);
                     $sth = $db->select($sql, $params);
                     if ($sth->rowCount() > 0) {

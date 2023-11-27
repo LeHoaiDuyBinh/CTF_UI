@@ -1,8 +1,8 @@
 <?php
 
     class App{
-        private $controller = "Dashboard_homeController";
-        private $controllerStr = "Dashboard_homeController";
+        private $controller = "ChallengeController";
+        private $controllerStr = "ChallengeController";
         private $action = "Show";
         private $params = [];
         function __construct() {
@@ -39,13 +39,14 @@
             // nếu $arr != null thì lấy arr, không thì lấy mảng rỗng
             $this->params = $arr?array_values($arr):[];
 
-           // print_r($this->params);
+        //    print_r($this->params);
+        //    die();
            // print_r($this->action);
            // print_r($this->controller);
            // die($this->controller);
            // có session chưa
 
-            if(isset($_SESSION['usr']) && isset($_SESSION['role'])){
+            if(isset($_SESSION['usr'])){
                 // gọi method trong class với params
                 call_user_func([$this->controller, $this->action], $this->params);
             }

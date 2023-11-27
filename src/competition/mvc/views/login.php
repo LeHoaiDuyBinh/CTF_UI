@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="/view/css/login.css">
+    <link rel="stylesheet" href="/public/css/login.css">
     <title>CTF</title>
 </head>
 
@@ -14,17 +14,21 @@
         <div class="form-container sign-up">
             <form>
                 <h1>Tạo tài khoản</h1>
-                <input type="text" placeholder="Tên của bạn">
                 <input type="text" placeholder="Tài khoản">
                 <input type="password" placeholder="Mật khẩu">
+                <input type="email" placeholder="Email">
                 <button>Đăng ký</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form>
+            <form action="/Auth/Login" method="POST">
                 <h1>Đăng nhập</h1>
-                <input type="text" placeholder="Tài Khoản">
-                <input type="password" placeholder="Mật khẩu">
+                <?php if(isset($_SESSION['message'])): ?>
+                <div style="width: 100%; text-align: center;  font-style:italic; font-size: 16px;" class="alert alert-danger"><?php echo $_SESSION['message']; ?></div>
+                    <?php unset($_SESSION['message']); ?>
+                <?php endif; ?>
+                <input type="text" placeholder="Tài Khoản" name="username">
+                <input type="password" placeholder="Mật khẩu" name="password">
                 <button>Đăng nhập</button>
             </form>
         </div>
@@ -44,7 +48,7 @@
         </div>
     </div>
 
-    <script src="/view/js/login.js"></script>
+    <script src="/public/js/login.js"></script>
 </body>
 
 </html>

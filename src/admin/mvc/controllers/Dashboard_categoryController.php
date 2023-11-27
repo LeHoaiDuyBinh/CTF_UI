@@ -58,19 +58,14 @@
                 //$this->access = true;
     
                 $category_data = array(
-                    "category_id" => $_POST['CategoryID'],
-                    "category_name" => $_POST['CategoryName'],
+                    "category_id" => $_POST['MaDanhMuc'],
+                    "category_name" => $_POST['TenDanhMuc'],
                 );
                     
                 $check = $this->ValidateData($category_data);
                 if($check == "validated"){
-                    if($category_data["category_id"] <= 8){
-                        echo "Không được sửa danh mục cha";
-                    }
-                    else if($category_data["category_id"] > 8){
                         $model = $this->model("Category");
                         $model->EditCategory($category_data);
-                    }
                 }
                 else{
                     echo $check;
@@ -82,18 +77,13 @@
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                 $category_data = array(
-                    "category_id" => $_POST['category_id'],
+                    "category_id" => $_POST['MaDanhMuc'],
                 );
 
                 $check = $this->validateNumber($category_data);
-
-                if($check == false){
-                    if($category_data["category_id"] <= 8){
-                        echo "Không được xóa danh mục cha";
-                    }
-                    else if($category_data["category_id"] > 8){
+                if($check === false){
                         $model = $this->model("Category");
-                        $model->DeleteCategory($category_data);}
+                        $model->DeleteCategory($category_data);
                     }
                 else{
                     echo $check;

@@ -10,8 +10,8 @@
 
         function view($view, $data){
 
-            if(file_exists("./mvc/views/admin/" . $view . ".php")){
-                require_once "./mvc/views/admin/" . $view. ".php";
+            if(file_exists("./mvc/views/" . $view . ".php")){
+                require_once "./mvc/views/" . $view. ".php";
             }
         }
 

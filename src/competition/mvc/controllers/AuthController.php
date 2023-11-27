@@ -21,7 +21,7 @@
             array_push($data, $password);
 
             // gọi model xử lý data
-            $model = $this->model("Admin");
+            $model = $this->model("User");
             $result = $model->checkAccount($data);
 
             if($result === "done"){

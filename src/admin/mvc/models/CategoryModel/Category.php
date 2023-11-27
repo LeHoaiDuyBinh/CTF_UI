@@ -41,8 +41,8 @@ include_once "./mvc/models/CategoryModel/CategoryObj.php";
         function EditCategory($data){
             try {
                 $db = new DB();
-                $sql = "UPDATE `Categories` SET `name` = ?, `parent_category_id` = ? WHERE `category_id` = ?;";
-                $params = array($data['category_name'], $data['category_parent_id'], $data['category_id']);
+                $sql = "UPDATE `Categories` SET `name` = ? WHERE `category_id` = ?;";
+                $params = array($data['category_name'], $data['category_id']);
                 $db->execute($sql, $params);
 
                 echo "done";
@@ -56,14 +56,13 @@ include_once "./mvc/models/CategoryModel/CategoryObj.php";
         function DeleteCategory($data){
             try {
                 $db = new DB();
-                $sql = "DELETE FROM `Categories` WHERE `category_id` = ?;";
+                $sql = "DELETE FROM `Categories` AS C WHERE C.category_id = ?";
                 $params = array($data['category_id']);
                 $db->execute($sql, $params);
 
                 echo "done";
             } catch (PDOException $e) {
-
-                echo "Lỗi khi sửa danh mục";
+                echo "Lỗi khi xóa danh mục, có thể có chall tham chiếu tới";
                 //echo  $sql . "<br>" . $e->getMessage();
             }
         }

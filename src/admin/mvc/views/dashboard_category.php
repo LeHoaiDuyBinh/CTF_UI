@@ -206,11 +206,10 @@
     table2.addEventListener('click', function(event) {
     if (event.target.classList.contains('fa-trash')) {
         const row = event.target.closest('tr');
-        const category_code = row.cells[0].textContent.trim();
-        console.log(category_code);
+        const MaDanhMuc = row.cells[0].textContent.trim();
 
         Swal.fire({
-            title: 'Bạn có chắc là muốn xóa sản phẩm này không?',
+            title: 'Bạn có chắc là muốn xóa danh mục này không?',
             text: "Mọi đơn hàng và thanh toán liên quan cũng sẽ bị xóa. Bạn sẽ không thể hoàn tác sau khi hoàn tất!",
             icon: 'warning',
             showCancelButton: true,
@@ -224,12 +223,12 @@
         $.ajax({
             url: '/Dashboard_category/DeleteCategory',
             type: 'POST',
-            data: { category_code: category_code },
+            data: { MaDanhMuc: MaDanhMuc },
             success: function(response) {
             if (response.trim() == "done") {
                 Swal.fire(
                 'Completed!',
-                'Bạn đã xóa sản phẩm thành công!',
+                'Bạn đã xóa danh mục thành công!',
                 'success'
                 )
                 // sau 2 giây sẽ tải lại trang

@@ -1,133 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/home.css">
-
-    <title>Document</title>
-</head>
-
-<body>
-    <!-- <header id="header" role="banner">
-        <nav class="top-bar" data-topbar="">
-            <ul class="title-area" itemprop="isPartOf" itemscope="" itemtype="https://schema.org/WebSite">
-                <li class="name">
-                    <a href="https://www.root-me.org?lang=en" title="challenge your hacking skills" target="_top">
-                        <img width="90" height="48" class="show-for-medium-up vmiddle" src="/public/img/PTIT.jpg">
-                        <span class="show-for-large-up blanc" style="font-size: 15px; font-size: 28px; color: white; font-weight: bold;">PTITCTF</span>
-                    </a>
-                </li>
-            </ul>
-            <section class="top-bar-section">
-                <ul class="left">
-                    <li class="hide-for-small-only">
-                        <a title="Frequently Asked Questions"><img src="/public/img/faq.png" alt="faq" width="32" height="32"></a>
-                    </li>
-                    <li class="hide-for-small-only">
-                        <a title="Site Map"><img src="/public/img/business-plan.png" alt="plan" width="32" height="32"></a>
-                    </li>
-                    <li class="hide-for-small-only">
-                        <a title="Contact"><img src="/public/img/contact-form.png" alt="contact" width="32" height="32"></a>
-                    </li>
-                    <li class="hide-for-small-only">
-                        <a title="Services state"><img src="/public/img/digital-services.png" width="32" height="32" alt="services"></a>
-                    </li>
-                    <li class="hide-for-small-only">
-                        <a title="Shop"><img src="/public/img/shopping-cart.png" alt="shop" width="32" height="32"></a>
-                    </li>
-                    <li class="search">
-                        <form>
-                            <input type="hidden" value="recherche" name="page">
-                            <input type="hidden" value="en" name="lang">
-                            <input class="search" name="recherche" placeholder="Search" minlength="3" type="search">
-                        </form>
-                    </li>
-                </ul>
-            </section>
-        </nav>
-    </header> -->
-    <?php require_once 'header.php' ?>
-
-    <div id="container">
-        <div id="main_row">
-            <!-- <div id="aside_wrapper">
-                <aside id="aside" role="complementary">
-                    <nav class="top-bar">
-                        <div class="top-bar-section" role="navigation">
-                            <ul class="right">
-                                <li class="has-dropdown">
-                                    <a>
-                                        <span class="logo left">
-                                            <img class="grayscale grayscale_hoveroff" src="/public/img/red-flag.png" width="16" height="16">
-                                         </span>
-                                        <span class="hide-for-medium-only">Capture The Flag</span>
-                                    </a>
-                                </li>
-                                <li class="has-dropdown active" style="display: block;">
-                                    <a href="#">
-                                        <span class="logo left">
-                                            <img src="/public/img/challenge.png" width="16" height="16" alt="0x0">
-                                        </span>
-                                        <span class="hide-for-medium-only">Challenges</span>
-                                    </a>
-                                </li>
-                                <li class="has-dropdown">
-                                    <a>
-                                        <span class="logo left">
-                                            <img class="grayscale grayscale_hoveroff" src="/public/img/community.png" width="16" height="16" alt="0x0">
-                                        </span>
-                                        <span class="hide-for-medium-only">Community</span>
-                                    </a>
-                                </li>
-                                <li class="has-dropdown">
-                                    <a>
-                                        <span class="logo left">
-                                            <img class="grayscale grayscale_hoveroff" src="/public/img/information.png" width="16" height="16" alt="0x0">
-                                        </span>
-                                        <span class="hide-for-medium-only">Information</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                    <div class="small-12 columns hide-for-medium-only">
-                        <div class="ajaxbloc bind-ajaxReload">
-                            <h3>Offers</h3>
-                            <a id="pagination_offres" class="pagination_ancre"></a>
-                            <ul>
-                                <li>
-                                    <a href="#" title="Engel &amp; Völkers Technology GmbH"><span style="background: white; border-radius: 3px;width:24px; height: 24px; line-height: 32px; padding: 2px; margin:2px;"><img class="vmiddle" src="https://console.pro.root-me.org/IMG/logo/ev_signet_socials_avatar_corporate_rgb__3_.png?1688553812" alt="organisation_logo" style="width: 20px; height:20px; object-fit: cover;"></span></a>&nbsp;
-                                    <span class="gras txs">CDI</span>&nbsp;<a title="Engel &amp; Völkers Technology GmbH : Cybersecurity Rapid Response Lead" class="txs" href="./?page=news&amp;inc=offre&amp;id_offre=101&amp;lang=en">Incident response</a>
-                                </li>
-                                <li>
-                                    <a href="https://elysium-security.com" title="Elysium Security" target="_BLANK"><span style="background: white; border-radius: 3px;width:24px; height: 24px; line-height: 32px; padding: 2px; margin:2px;"><img class="vmiddle" src="https://console.pro.root-me.org/IMG/logo/organisationon32.png?1678276537" alt="organisation_logo" style="width: 20px; height:20px; object-fit: cover;"></span></a>&nbsp;
-                                    <span class="gras txs">CDI</span>&nbsp;<a title="Elysium Security : Consultant en cybersécurité - offensif/défensif - confirmé (H/F)" class="txs" href="./?page=news&amp;inc=offre&amp;id_offre=93&amp;lang=en">Cybersecurity consultant</a>
-                                </li>
-                                <li>
-                                    <a href="https://pro.root-me.org/" title="ROOT-ME PRO" target="_BLANK"><span style="background: white; border-radius: 3px;width:24px; height: 24px; line-height: 32px; padding: 2px; margin:2px;"><img class="vmiddle" src="https://console.pro.root-me.org/IMG/logo/organisationon33.png?1678276526" alt="organisation_logo" style="width: 20px; height:20px; object-fit: cover;"></span></a>&nbsp;
-                                    <span class="gras txs">AUT</span>&nbsp;<a title="ROOT-ME PRO : Créateur de contenus Root-Me - H/F " class="txs" href="./?page=news&amp;inc=offre&amp;id_offre=48&amp;lang=en">R&amp;D engineer</a>
-                                </li>
-                            </ul>
-                            <div class="pagination"></div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <h3>Sponsored by</h3>
-                        <ul>
-                            <li><a target="_BLANK">Oteria Cyber School</a></li>
-                            <li><a target="_BLANK">Elysium Security</a></li>
-                            <li><a target="_BLANK">École 2600</a></li>
-                            <li><a target="_BLANK">GEOIDE</a></li>
-                            <li><a target="_BLANK">Almond</a></li>
-                            <li><a target="_BLANK">Synacktiv</a></li>
-                            <li><a class="mediabox pageajax cboxElement hasbox">You&nbsp;;-)</a></li>
-                        </ul>
-                    </div>
-                </aside>
-            </div> -->
-            <?php require_once 'sideBar.php' ?>
-            <!-- <div id="main_wrapper" class="row">
+<div id="main_wrapper" class="row">
                 <ul id="breadcrumb" class="breadcrumbs">
                     <li>
                         <a title="Challenges"><span>Challenges</span></a>
@@ -208,7 +79,7 @@
                         <div class="small-12 medium-6 columns">
                             <div class="tile">
                                 <div class="t-body tb-padding">
-                                    <h4><img src="/public/img/network.png" alt="Network" width="32" height="32">&nbsp;<a href="/Category/Network" title="The following set of problems deal with network traffic including different protocols. You need to analyse the packet captures to solve these challenges. Prerequisites: – Knowledge of a network capture analyzing tool. – Knowlege of the most common (...)"
+                                    <h4><img src="/public/img/network.png" alt="Network" width="32" height="32">&nbsp;<a href="/Challenge/Category/Network" title="The following set of problems deal with network traffic including different protocols. You need to analyse the packet captures to solve these challenges. Prerequisites: – Knowledge of a network capture analyzing tool. – Knowlege of the most common (...)"
                                             class="crayon rubrique-texte-183 ">Network</a></h4>
                                     <div class="clearfix"></div>
                                     <span><b class="color1">27</b>&nbsp;challenges</span>
@@ -274,6 +145,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--ajaxbloc-->
                 </main>
                 <footer id="footer" role="contentinfo">
                     <div class="text-center">
@@ -311,17 +183,4 @@
                         </div>
                     </div>
                 </footer>
-            </div> -->
-            <?php if($data['page'] == 'category'){
-                require_once 'category_list.php';
-            }else if($data['page'] == 'list_chall'){
-                require_once 'chall_list.php';
-            } else if($data['page'] == 'chall_details'){
-                require_once 'chall_details.php';
-            }
-            ?>
-        </div>
-    </div>
-</body>
-
-</html>
+            </div>

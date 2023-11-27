@@ -1,5 +1,5 @@
 <?php 
-    class AdminObj{
+    class UserObj{
         private $admin_id;
         private $username;
         private $password;
