@@ -25,12 +25,29 @@ include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
                 }
         }
 
+        function checkFlag($data){
+            try {
+                $arr = [];
+                $db = new DB();
+                $sql = "SELECT CH.* FROM Challenges AS CH WHERE CH.chall_id = ? AND CH.flag = ? ";
+                $params = array($data['chall_id'], $data['flag']);
+                $sth = $db->select($sql, $params);
+                $arr = [];
+                $chall_from_DB = $sth->fetchAll();
+                foreach ($chall_from_DB as $row) {
+                    return true;
+                }   
+                return false;
+            } catch (PDOException $e) {
+                return  $sql . "<br>" . $e->getMessage();
+            }
+    }
+
         function addScore($data){
             try {
                 $db = new DB();
-                $sql = "INSERT INTO `Challenges`(`chall_id`,`username`) 
-                VALUES (?,?)";
-                $params = array($data['chall_id'], $data['username']);
+                $sql = "UPDATE `Users` SET `score`= `score` + ? WHERE `username` = ?";
+                $params = array($data['score'], $data['username']);
                 $db->execute($sql, $params);
                 echo "done";
             } catch (PDOException $e) {
@@ -43,12 +60,11 @@ include_once "./mvc/models/ChallengeModel/ChallengeObj.php";
         function solve($data){
             try {
                 $db = new DB();
-                $sql = "INSERT INTO `Challenges`(`chall_id`,`username`) 
+                $sql = "INSERT INTO `Solved`(`chall_id`,`username`) 
                 VALUES (?,?)";
                 $params = array($data['chall_id'], $data['username']);
                 $db->execute($sql, $params);
                 $this->addScore($data);
-                echo "done";
             } catch (PDOException $e) {
 
                 //echo "Lỗi khi thêm chall";
