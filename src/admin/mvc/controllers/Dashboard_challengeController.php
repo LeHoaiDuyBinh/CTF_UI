@@ -28,6 +28,11 @@
             // di chuyển từng file vào dir vừa tạo
                 // lưu lại dir
                 $path = $uploadPath . "/" .  basename($uploadedFile["name"]);
+
+                // Check if file already exists
+                if (file_exists($path)) {
+                    return false;
+                }
                 //var_dump($uploadedFile);
                 if(move_uploaded_file($uploadedFile['tmp_name'], $path)){
                     return $path;
@@ -43,18 +48,12 @@
                 return "Vui lòng nhập đủ thông tin";
             }
 
-            $arr_Str["category_name"] = $data['category_name'];
-
-            $arr_Number['category_parent_id'] = $data['category_parent_id'];
-            $arr_Number['category_id'] = $data['category_id'] == null ? 0 : $data['category_id'];
+            $arr_Number['score'] = $data['score'];
+            $arr_Number['category_id'] = $data['category_id'];
 
             if($this->validateNumber($arr_Number)){
                 //var_dump($arr_Number);
                 return "Giá trị số không hợp lệ";
-            }
-
-            if($this->validateSpecialCharacter($arr_Str)){
-                return "Dữ liệu không được chứa kí tự đặc biệt";
             }
             
             return 'validated';
@@ -72,25 +71,27 @@
                         "chall_name" => $_POST['TenThachThuc'],
                         "description" => $_POST['MoTa'],
                         "score" => $_POST['Diem'],
-                        "author" => $_POST['Author'],
-                        "flag" => $_POST['Flag']
+                        "author" => $_POST['TacGia'],
+                        "flag" => $_POST['flag'],
+                        "category_id" => $_POST['DanhMuc']
                     );
-                        
-                    //$check = $this->ValidateProductData($product_data);
-                    $check = 'validated';
+                    
+                    // var_dump($chall_data);
+                    // die();
+                    $check = $this->ValidateData($chall_data);
                     if($check === "validated"){
                         
                         $uploadedFile = $_FILES["ChallFilePath"];
                         $fileNames = $this->UpLoadFiles($uploadedFile);
                         if($fileNames == false){
-                            echo "Lỗi upload file";
+                            echo "Lỗi upload file, có thể do up file trùng";
                         }
                         else{
                             // thêm ảnh vào data
                             $chall_data["chall_path"] = $fileNames;
 
                             $model = $this->model("Challenge");
-                            $model->InsertProduct($chall_data);
+                            $model->InsertChall($chall_data);
                         }
                     }
                     else{
@@ -100,18 +101,19 @@
             }
         }
 
-        function EditCategory(){
+        function EditChall(){
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $this->access = true;
     
                 $chall_data = array(
-                    "category_id" => $_POST['CategoryID'],
-                    "description" => $_POST['CategoryName'],
-                    "score" => $_POST['CategoryParentID'],
-                    "author" => $_POST['CategoryParentID'],
-                    "chall_path" => $_POST['CategoryParentID'],
-                    "category_id" => $_POST['CategoryParentID'],
+                    "chall_name" => $_POST['TenThachThuc'],
+                    "chall_name" => $_POST['TenThachThuc'],
+                    "description" => $_POST['MoTa'],
+                    "score" => $_POST['Diem'],
+                    "author" => $_POST['TacGia'],
+                    "flag" => $_POST['flag'],
+                    "category_id" => $_POST['DanhMuc']
                 );
                     
                 $check = $this->ValidateData($chall_data);
@@ -130,23 +132,23 @@
             }
         }
 
-        function DeleteCategory(){
+        function DeleteChall(){
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-                $category_data = array(
-                    "category_id" => $_POST['category_id'],
+                $chall_data = array(
+                    "chall_id" => $_POST['ID'],
                 );
 
-                $check = $this->validateNumber($category_data);
+                $check = $this->validateNumber($chall_data);
 
                 if($check == false){
-                    if($category_data["category_id"] <= 8){
-                        echo "Không được xóa danh mục cha";
-                    }
-                    else if($category_data["category_id"] > 8){
-                        $model = $this->model("Category");
-                        $model->DeleteCategory($category_data);}
-                    }
+                        $model = $this->model("Challenge");
+                        $obj = $model->LoadChallPath($chall_data['chall_id']);
+
+                        unlink($obj[0]->getChall_path());
+                        
+                        $model = $this->model("Challenge");
+                        $model->DeleteChall($chall_data);}
                 else{
                     echo $check;
                 }

@@ -210,7 +210,7 @@
 
         Swal.fire({
             title: 'Bạn có chắc là muốn xóa danh mục này không?',
-            text: "Mọi đơn hàng và thanh toán liên quan cũng sẽ bị xóa. Bạn sẽ không thể hoàn tác sau khi hoàn tất!",
+            text: "Không thể hoàn tác!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
