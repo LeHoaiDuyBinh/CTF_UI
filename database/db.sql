@@ -27,6 +27,7 @@ CREATE TABLE Users (
   username VARCHAR(100) PRIMARY KEY,
   password VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL,
+  score INT DEFAULT 0,
   random_code VARCHAR(20)
 );
 

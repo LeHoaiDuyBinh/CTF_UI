@@ -47,10 +47,11 @@
 
             <!--********************* Category ***********************-->
             <div style="background: var(--light);color: var(--dark);">
-                <table width="100%">
+                <table width="100%" id="myTable">
                     <thead>
                         <tr>
                             <!-- <th>ID</th> -->
+                            <th style="width: 50px;"><span class="las la-sort"></span> ID</th>
                             <th style="width: 200px;"><span class="las la-sort"></span> Tên TT</th>
                             <th style="width: 200px;"><span class="las la-sort"></span> Mô tả</th>
                             <th style="width: 120px;"><span class="las la-sort"></span> Điểm</th>
@@ -145,6 +146,7 @@
         document.getElementById("Diem").value = "";
         document.getElementById("TacGia").value = "";
         document.getElementById("flag").value = "";
+        document.getElementById("TenThachThuc").value = "";
         var challForm = document.getElementById("ChallForm");
         var existingLabel = document.getElementById("CFP");
         var existingInput = document.getElementById("ChallFilePath");
@@ -282,6 +284,55 @@
         $('#cancelBtn').on('click', function () {
             $('#myModal').hide();
         });
+    });
+    // XÓA
+    const table2 = document.querySelector('#myTable');
+    table2.addEventListener('click', function(event) {
+    if (event.target.classList.contains('fa-trash')) {
+        const row = event.target.closest('tr');
+        const ID = row.cells[0].textContent.trim();
+
+        Swal.fire({
+            title: 'Bạn có chắc là muốn xóa danh mục này không?',
+            text: "Không thể hoàn tác!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vẫn xóa',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        var sw = showLoadingSwal();
+        $.ajax({
+            url: '/Dashboard_challenge/DeleteChall',
+            type: 'POST',
+            data: { ID: ID },
+            success: function(response) {
+            if (response.trim() == "done") {
+                Swal.fire(
+                'Completed!',
+                'Bạn đã xóa chall thành công!',
+                'success'
+                )
+                // sau 2 giây sẽ tải lại trang
+                setTimeout(function() {
+                    location.reload();
+                }, 1000); 
+            } else {
+                sw.close();
+                // Nếu có lỗi thì hiển thị thông báo lỗi
+                Swal.fire(
+                'Oops...',
+                response,
+                'error'
+                )
+            }
+            },
+        });
+        }
+    })
+    }
     });
     // Active
     link.classList.add('active');

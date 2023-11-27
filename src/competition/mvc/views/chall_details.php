@@ -44,12 +44,16 @@
                                                 <div class="formulaire_spip formulaire_validation_challenge formulaire_editer_message_validation_challenge" id="formulaire_validation_challenge">
                                                     <br class="bugajaxie">
                                                     <h4>Validation</h4>
-                                                    <form name="formulaire_validation_challenge" method="post"><input type="hidden" name="var_ajax" value="form">
-                                                        <p id = "id_chall" style="display: none;"><?php echo $data['chall_details']->getChall_id(); ?></p>      
-                                                        <p id = "score_chall" style="display: none;"><?php echo $data['chall_details']->getScore(); ?></p>                        
-                                                        <p id = "id_chall" style="display: none;"><?php echo $_SESSION['usr']; ?></p>                        
-                                                        <label for="passe">Enter password</label>
-                                                        <input type="password" autocomplete="off" name="FLAG" id="FLAG" length="30" class="spip_bouton" required="required" autocapitalize="off" autocorrect="off">                                                         
+                                                    <form name="formulaire_validation_challenge" method="post" action="/Api/CheckFlag/" id="formFlag">
+                                                    <?php if(isset($_SESSION['message'])): ?>
+                                                        <div style="width: 100%; text-align: center;  font-style:italic; font-size: 16px;" class="alert alert-danger"><?php echo $_SESSION['message']; ?></div>
+                                                            <?php unset($_SESSION['message']); ?>
+                                                        <?php endif; ?>
+                                                        <input type="hidden" id = "id_chall" name="id_chall" value="<?php echo $data['chall_details']->getChall_id(); ?>">      
+                                                        <input type="hidden" id = "score_chall" name="score_chall" value="<?php echo $data['chall_details']->getScore(); ?>">                        
+                                                        <input type="hidden" id = "username" name="username" value="<?php echo $_SESSION['usr']; ?>">                        
+                                                        <label for="passe">Enter flag</label>
+                                                        <input type="text" autocomplete="off" name="FLAG" id="FLAG" length="30" class="spip_bouton" required="required" autocapitalize="off" autocorrect="off">                                                         
                                                         <p class="boutons"><input type="submit" value="Send" class="submit"></p>
                                                     </form>
                                                 </div>
