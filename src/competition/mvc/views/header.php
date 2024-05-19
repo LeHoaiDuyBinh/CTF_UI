@@ -4,7 +4,7 @@
                 <li class="name">
                     <a href="#" title="challenge your hacking skills" target="_top">
                         <img width="90" height="48" class="show-for-medium-up vmiddle" src="/public/img/PTIT.jpg">
-                        <span class="show-for-large-up blanc" style="font-size: 15px; font-size: 28px; color: white; font-weight: bold;">PTITCTF</span>
+                        <span class="show-for-large-up blanc" style="font-size: 15px; font-size: 28px; color: white; font-weight: bold;">PTITHCM</span>
                     </a>
                 </li>
             </ul>

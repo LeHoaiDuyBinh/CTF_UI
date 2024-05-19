@@ -1,7 +1,7 @@
 <div class="sidebar">
         <a href="#" class="logo">
             <i class='bx bx-code-alt'></i>
-            <div class="logo-name"><span>PTIT</span>CTF</div>
+            <div class="logo-name"><span>PTIT</span>HCM</div>
         </a>
         <ul class="side-menu">
             <li class="slide-menu-category"><a href="/Dashboard_category"><i class='bx bxs-dashboard'></i>Danh mục thách thức</a></li>
