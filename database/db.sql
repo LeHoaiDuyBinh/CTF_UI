@@ -49,7 +49,7 @@ CREATE TABLE AdminAccounts (
   password VARCHAR(100) NOT NULL
 );
 
-INSERT INTO AdminAccounts (username, password) VALUES('moros', '123');
+INSERT INTO AdminAccounts (username, password) VALUES('moros', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3');
 
 INSERT INTO `Categories`(`name`) VALUES ('Web');
 INSERT INTO `Categories`(`name`) VALUES ('Reverse');
@@ -58,4 +58,4 @@ INSERT INTO `Categories`(`name`) VALUES ('Network');
 INSERT INTO `Categories`(`name`) VALUES ('Forensic');
 
 INSERT INTO `Challenges`(`chall_name`,`description`, `score`, `author`, `flag`, `chall_path`, `category_id`) VALUES ('FTP - authentication','test',20,'Moros','ptithcmCTF','/public/challenges/ch1.pcap',4);
-INSERT INTO `Users`(`username`, `password`, `email`) VALUES ('teo','teo','teo@gmail.com');
+INSERT INTO `Users`(`username`, `password`, `email`) VALUES ('teo','947d5a35ff2fe522fda5b431af955e3b27955ebc18c9e3684b07b51ae112461f','teo@gmail.com');

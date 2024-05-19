@@ -3,12 +3,21 @@
     class ChallengeController extends Controller{
         function Show(){
             $data = [];
+
+            $model = $this->model('User');
+            $score = $model->getScore($_SESSION['usr']);
+
+            $data['score'] = $score;
             $data['page'] = 'category';
             $page = $this->view("challenges", $data);
         }
         function Category($params){
             // localhost/Challenge/Network/FTP-chall/...
             $data = [];
+            $model = $this->model('User');
+            $score = $model->getScore($_SESSION['usr']);
+
+            $data['score'] = $score;
             if($params == null || $params[0] == '')
             {
                 $data['page'] = 'category';
@@ -21,7 +30,9 @@
                         foreach($list as $each){
                             if($each->getName() == $params[0]){
                                 $model = $this->model('Challenge');
-                                $list_chall = $model->LoadChall($each->getCategory_id());
+                                $data_chall['category_id'] = $each->getCategory_id();
+                                $data_chall['username'] = $_SESSION['usr'];
+                                $list_chall = $model->LoadChall($data_chall);
                                 break;
                             }
                         }
@@ -37,6 +48,11 @@
                                         $chall_details = $each;
                                         $data['page'] = 'chall_details';
                                         $data['chall_details'] = $chall_details;
+                                        $model = $this->model('Solved');
+                                        $data['user_submitted'] = $model->LoadUserSubmitted($each->getChall_id());
+                                        if(empty($data['user_submitted'])){
+                                            $data['user_submitted'] = "None";
+                                        }
                                         $this->view("challenges", $data);
                                         break;
                                     }

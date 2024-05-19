@@ -6,17 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="stylesheet" href="https://unpkg.com/sweetalert2@11.0.0/dist/sweetalert2.min.css">
+
+    <script src="https://unpkg.com/sweetalert2@11.0.0/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>CTF</title>
 </head>
 
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <form id="registryForm">
                 <h1>Tạo tài khoản</h1>
-                <input type="text" placeholder="Tài khoản">
-                <input type="password" placeholder="Mật khẩu">
-                <input type="email" placeholder="Email">
+                <input name="username" type="text" placeholder="Tài khoản">
+                <input name="password" type="password" placeholder="Mật khẩu">
+                <input name="email" type="email" placeholder="Email">
                 <button>Đăng ký</button>
             </form>
         </div>
@@ -52,3 +56,51 @@
 </body>
 
 </html>
+<script>
+    function showLoadingSwal() {
+            return Swal.fire({
+                title: 'Loading...',
+                text: 'Vui lòng chờ trong giây lát!',
+                timer: 2000,
+                showConfirmButton: false,
+                imageUrl: '/public/img/gif/loading.gif',
+                allowOutsideClick: false // Không cho phép đóng khi click ra ngoài
+            });
+        }
+
+    $('#registryForm').submit(function(e){
+        e.preventDefault();
+
+        // gửi data
+        var sw = showLoadingSwal();
+            $.ajax({
+                url:'/Auth/Registry',
+                method: 'POST',
+                data:$(this).serialize(),
+                error:err=>{
+                    console.log(err)
+                },
+                success:function(resp){
+            if(resp.trim() == "done"){
+            Swal.fire(
+                'Completed!',
+                'Đăng kí thành công!',
+                'success'
+                )
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+            }else{
+                
+                Swal.fire(
+                'Wrong!',
+                resp,
+                'error'
+                )
+                //nhớ thêm cái này cho mấy trang kia
+               
+            }
+        }
+    })
+    });
+</script>

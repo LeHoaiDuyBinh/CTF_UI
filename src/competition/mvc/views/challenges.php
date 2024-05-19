@@ -9,7 +9,7 @@
 
     <script src="https://unpkg.com/sweetalert2@11.0.0/dist/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <title>Document</title>
+    <title>CTF-PTITHCM</title>
 </head>
 
 <body>

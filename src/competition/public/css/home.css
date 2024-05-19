@@ -3184,7 +3184,9 @@ blockquote p {
 table {
     background: #FFF;
     margin-bottom: 1.25rem;
-    table-layout: auto
+    table-layout: auto;
+    margin-left: 1.55rem;
+    width: 96.5%;
 }
 
 table caption {
@@ -3197,7 +3199,7 @@ table caption {
 table thead tr th,
 table thead tr td {
     padding: .5rem .625rem .625rem;
-    font-size: .875rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #222
 }
@@ -3217,7 +3219,9 @@ table tfoot tr td {
 table tr th,
 table tr td {
     padding: .5625rem .625rem;
-    font-size: .875rem
+    font-size: 1.25rem;
+    text-align: center;
+    border-top: 2px solid #000 !important;
 }
 
 table tr.even,
@@ -3233,6 +3237,7 @@ table tbody tr th,
 table tbody tr td,
 table tr td {
     display: table-cell;
+    height: 50px;
     line-height: 1.125rem
 }
 
@@ -9137,9 +9142,6 @@ ul#learningpath li.final:hover:after {
     #header ul.title-area>li.name {
         background-color: rgb(15, 16, 20)
     }
-    #header ul.title-area>li.name img {
-        filter: invert(1)
-    }
     #header ul>li>a>img:not(.logo_auteur) #header>nav.top-bar img.logo_auteur {
         background-color: #191C22
     }
@@ -9479,3 +9481,4 @@ a.bouton-incarner:hover {
     display: inline;
     font-size: .95em
 }
+

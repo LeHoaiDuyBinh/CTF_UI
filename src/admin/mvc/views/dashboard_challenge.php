@@ -65,7 +65,7 @@
                         <?php ?>
                         <?php foreach($data['chall'] as $challenge): ?>
                             <tr> 
-                                <td data-label="ID" style="display: none;"><?php echo $challenge->getChall_id(); ?></td>
+                                <td data-label="ID"><?php echo $challenge->getChall_id(); ?></td>
                                 <td data-label="TenTT"><?php echo $challenge->getChall_name(); ?></td>
                                 <td data-label="MoTa"><?php echo $challenge->getDescription(); ?></td>
                                 <td data-label="Diem"><?php echo $challenge->getScore(); ?></td>

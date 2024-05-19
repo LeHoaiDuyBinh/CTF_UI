@@ -55,7 +55,7 @@
                                                 <?php foreach($data['list_chall'] as $each): ?>
                                                     <tr>
                                                         <td>
-                                                            <img class="vmiddle" src="/public/img/close.png" width="12" height="12" alt="pas_valide">
+                                                            <img class="vmiddle" src="/public/img/<?php echo $each->getSubmit_time() != null ? 'valide.svg' : 'close.png' ?>" width="12" height="12" alt="pas_valide">
                                                         </td>
                                                         <?php $path = str_replace(' ', '', $each->getChall_name()); ?>
                                                         <td class="text-center">

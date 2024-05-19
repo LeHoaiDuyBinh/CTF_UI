@@ -51,7 +51,7 @@
                 call_user_func([$this->controller, $this->action], $this->params);
             }
             else{
-                    if($this->controllerStr == "AuthController" && ($this->action == "Show" || $this->action == "Login")){
+                    if($this->controllerStr == "AuthController" && ($this->action == "Show" || $this->action == "Login" || $this->action == "Registry")){
                         call_user_func([$this->controller, $this->action], $this->params);
                     }
                     else{

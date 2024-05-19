@@ -18,7 +18,8 @@
             }
 
             array_push($data, $username);
-            array_push($data, $password);
+            $pass_hash = hash('sha256', $password);
+            array_push($data, $pass_hash);
 
             // gọi model xử lý data
             $model = $this->model("User");
@@ -37,6 +38,39 @@
                 exit;
             }
 
+        }
+
+        function Registry(){
+
+            // lấy và validate data
+            $data = [];
+            $username = '';
+            $password = '';
+            if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])){
+                $data['username'] = $_POST['username'];
+                $data['password'] = $_POST['password'];
+                $data['email'] = $_POST['email'];
+            }
+            $pass_hash = hash('sha256', $data['password']);
+            $data['password'] = $pass_hash;
+            // gọi model xử lý data
+            $model = $this->model("User");
+            $result = $model->isHaveAccount($data);
+
+            if($result == "no"){
+                $result = $model->addUser($data);
+                
+                if($result == "done"){
+                    echo "done";
+                }
+                else{
+                    echo "error";
+                }
+            }
+            else{
+                echo "This username already exists";
+                //echo $result;
+            }
         }
 
         public function Logout(){

@@ -32,7 +32,13 @@
             $model = $this->model("Challenge");
             $result = $model->checkFlag($data);
             if($result == true){
-                $model->solve($data);
+
+                $result =  $model->checkSubmit($data);
+                if($result == true){
+                    echo $result;
+                }else{
+                    $model->solve($data);
+                }
             }
             else{
                 echo "wrong";

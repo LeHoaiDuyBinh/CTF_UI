@@ -9,7 +9,6 @@
             $model = $this->model("Category");
             $data['category'] = $model->LoadCategories();
 
-
             //var_dump($data['chall']);
             $page = $this->view("dashboard_challenge", $data);
         }

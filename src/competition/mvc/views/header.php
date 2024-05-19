@@ -2,7 +2,7 @@
         <nav class="top-bar" data-topbar="">
             <ul class="title-area" itemprop="isPartOf" itemscope="" itemtype="https://schema.org/WebSite">
                 <li class="name">
-                    <a href="https://www.root-me.org?lang=en" title="challenge your hacking skills" target="_top">
+                    <a href="#" title="challenge your hacking skills" target="_top">
                         <img width="90" height="48" class="show-for-medium-up vmiddle" src="/public/img/PTIT.jpg">
                         <span class="show-for-large-up blanc" style="font-size: 15px; font-size: 28px; color: white; font-weight: bold;">PTITCTF</span>
                     </a>
@@ -31,6 +31,9 @@
                             <input type="hidden" value="en" name="lang">
                             <input class="search" name="recherche" placeholder="Search" minlength="3" type="search">
                         </form>
+                    </li>
+                    <li class="score">
+                    <span class="show-for-large-up blanc" style="font-size: 20px; color: green; font-weight: bold;margin-left: 50px">score: <?php echo $data['score']; ?> </span>
                     </li>
                 </ul>
             </section>

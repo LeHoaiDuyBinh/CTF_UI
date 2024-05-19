@@ -59,15 +59,12 @@
                             <div class="pagination"></div>
                         </div>
                         <div class="clearfix"></div>
-                        <h3>Sponsored by</h3>
-                        <ul>
-                            <li><a target="_BLANK">Oteria Cyber School</a></li>
-                            <li><a target="_BLANK">Elysium Security</a></li>
-                            <li><a target="_BLANK">École 2600</a></li>
-                            <li><a target="_BLANK">GEOIDE</a></li>
-                            <li><a target="_BLANK">Almond</a></li>
-                            <li><a target="_BLANK">Synacktiv</a></li>
-                            <li><a class="mediabox pageajax cboxElement hasbox">You&nbsp;;-)</a></li>
+                        <ul class="side-menu">
+                            <li>
+                                <a href="/Auth/Logout" class="logout">
+                                    <i class='bx bx-log-out-circle'></i> Logout
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </aside>

@@ -65,6 +65,31 @@
                         </div>
                     </div>
                 </main>
+                <div style="background: var(--light);color: var(--dark);">
+                    <table width="100%" id="myTable">
+                        <thead>
+                            <tr>
+                                <!-- <th>ID</th> -->
+                                <th style="width: 50px;"><span class="las la-sort"></span> Username</th>
+                                <th style="width: 50px;"><span class="las la-sort"></span> Submit time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            <?php if($data['user_submitted'] != "None"){ ?>
+                                <?php foreach($data['user_submitted'] as $usr): ?>
+                                    <tr> 
+                                        <td data-label="Username"><?php echo $usr->getUsername(); ?></td>
+                                        <td data-label="Submit"><?php echo $usr->getSubmit_time(); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td data-label="User" colspan="2" style="font-style: italic;">None</td>
+                                </tr> 
+                             <?php   };?>
+                        </tbody>
+                    </table>
+                </div>
                 <footer id="footer" role="contentinfo">
                     <div class="text-center">
                         <div class="columns small-12">

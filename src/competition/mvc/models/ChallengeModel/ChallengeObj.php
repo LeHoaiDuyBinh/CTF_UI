@@ -8,6 +8,7 @@
         private $chall_path;
         private $category;
         private $category_id;
+        private $submit_time;
 
         public function __construct($row)
         {
@@ -19,7 +20,7 @@
             $this->chall_path = $row['chall_path'];
             $this->category = $row['name'];
             $this->category_id = $row['category_id'];
-
+            $this->submit_time = $row['submit_time'];
         }
 
         public function getChall_id()
@@ -98,6 +99,17 @@
         public function setCategory_id($category_id)
         {
                 $this->category_id = $category_id;
+
+        }
+
+        public function getSubmit_time()
+        {
+                return $this->submit_time;
+        }
+
+        public function setSubmit_time($submit_time)
+        {
+                $this->submit_time = $submit_time;
 
         }
     };
